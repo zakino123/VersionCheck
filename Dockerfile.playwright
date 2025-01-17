@@ -1,0 +1,9 @@
+ARG PLAYWRIGHT_VERSION
+FROM mcr.microsoft.com/playwright:v${PLAYWRIGHT_VERSION}-focal
+
+WORKDIR /root
+COPY ./forDocker/playwright/launchServer.ts /root/launchServer.ts
+RUN npm install playwright@${PLAYWRIGHT_VERSION} && ./node_modules/.bin/playwright install --with-deps chromium
+
+EXPOSE $PLAYWRIGHT_PORT
+CMD ["node", "launchServer.ts"]

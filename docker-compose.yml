@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  app:
+    container_name: app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      FIXIE_URL: 'http://fixie:uIHhFwvaTQ7CKUt@velodrome.usefixie.com:80'
+      HOST_NAME: 'talk.ukabu-app.com'
+    tty: true
+    stdin_open: true
+    command: bash -c "rm -f tmp/pids/server.pid && rails s"
+    volumes:
+      - .:/app
+      - bundle_install:/usr/local/bundle
+    ports:
+      - "3000:3000"
+      - "3443:3443"
+    depends_on:
+      - db
+
+  db:
+    platform: linux/x86_64
+    image: mysql:8.0
+    container_name: db
+    restart: always
+    volumes:
+      - ./forDocker/mysql/conf.d:/etc/mysql/conf.d
+      - dbvol:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+      TZ: "Asia/Tokyo"
+
+  adminer:
+    image: adminer:latest
+    container_name: adminer
+    ports:
+      - "9000:8080"
+    depends_on:
+      - db
+
+  playwright:
+    container_name: playwright
+    restart: "no"
+    build:
+      context: .
+      dockerfile: Dockerfile.playwright
+      args:
+        PLAYWRIGHT_VERSION: $PLAYWRIGHT_VERSION
+  dozzle:
+    container_name: dozzle
+    image: amir20/dozzle:latest
+    environment: 
+      - DOZZLE_FILTER=status=running
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 9001:8080
+
+volumes:
+  bundle_install:
+  dbvol:
