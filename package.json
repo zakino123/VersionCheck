@@ -1,17 +1,18 @@
 {
-  "name": "app",
   "private": true,
-  "dependencies": {
-    "@rails/actioncable": "^6.0.0",
-    "@rails/activestorage": "^6.0.0",
-    "@rails/ujs": "^6.0.0",
-    "@rails/webpacker": "5.4.4",
-    "turbolinks": "^5.2.0",
-    "webpack": "^4.46.0",
-    "webpack-cli": "^3.3.12"
+  "scripts": {
+    "cleancss": "rimraf ./public/packs/css/",
+    "postcss": "postcss ./app/assets/stylesheets/**/*.css -d ./public/packs/css/",
+    "output_manifest": "node output_manifest_js.js public"
   },
-  "version": "0.1.0",
   "devDependencies": {
-    "webpack-dev-server": "^3"
+    "autoprefixer": "^10.0.4",
+    "postcss": "^8.5.1",
+    "postcss-cli": "^11.0.0",
+    "postcss-import": "^16.1.0",
+    "postcss-nested": "^7.0.2",
+    "rimraf": "^3.0.2",
+    "tailwindcss": "^3.4.17",
+    "yarn-run-all": "^3.1.1"
   }
 }

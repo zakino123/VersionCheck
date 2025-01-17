@@ -1,0 +1,32 @@
+<%= form_with(model: weight_histroy) do |form| %>
+  <% if weight_histroy.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(weight_histroy.errors.count, "error") %> prohibited this weight_histroy from being saved:</h2>
+
+      <ul>
+        <% weight_histroy.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :user_id %>
+    <%= form.text_field :user_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :weight %>
+    <%= form.number_field :weight %>
+  </div>
+
+  <div class="field">
+    <%= form.label :memo %>
+    <%= form.text_field :memo %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
