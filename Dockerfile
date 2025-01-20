@@ -1,4 +1,4 @@
-FROM ruby:2.7.3
+FROM ruby:3.3.7
 RUN set -x && curl -sL https://deb.nodesource.com/setup_20.x | bash -
 
 RUN set -x && apt-get update -y -qq && apt-get install -yq less lsof vim default-mysql-client
