@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.7.3'
+ruby '3.4.1'
 
 gem 'rails', '~> 6.1.3.1'
 gem 'mysql2', '~> 0.5'
@@ -17,6 +17,11 @@ gem 'devise-i18n'
 gem 'active_model_otp'
 
 gem 'banken'
+
+gem 'concurrent-ruby', '1.3.4'
+
+gem 'bigdecimal', '~> 1.4', '>= 1.4.2'
+gem 'mutex_m', '~> 0.2.0'
 
 gem 'ipaddress'
 
