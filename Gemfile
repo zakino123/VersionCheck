@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.7.3'
+ruby '3.3.7'
 
 gem 'bootsnap', '>= 1.4.4', require: false
 gem 'jbuilder', '~> 2.7'
@@ -19,6 +19,7 @@ gem 'active_model_otp'
 gem 'banken'
 
 gem 'ipaddress'
+gem 'net-smtp'
 
 gem 'lograge'
 gem 'lograge-sql'
