@@ -1,13 +1,15 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.7.3'
+ruby '3.2.6'
 
 gem 'bootsnap', '>= 1.4.4', require: false
 gem 'jbuilder', '~> 2.7'
 gem 'mysql2', '~> 0.5'
-gem 'puma', '~> 5.0'
-gem 'rails', '~> 6.1.3.1'
+gem 'puma', '>= 6.0'
+gem 'rails', '~> 7.2', '>= 7.2.2.1'
+
+gem 'sprockets-rails'
 
 gem 'simpacker'
 
