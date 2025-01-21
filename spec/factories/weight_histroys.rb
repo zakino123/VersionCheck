@@ -2,6 +2,6 @@ FactoryBot.define do
   factory :weight_histroy do
     user { nil }
     weight { 1 }
-    memo { "MyString" }
+    memo { 'MyString' }
   end
 end
