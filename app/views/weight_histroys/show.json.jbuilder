@@ -1,1 +1,1 @@
-json.partial! "weight_histroys/weight_histroy", weight_histroy: @weight_histroy
+json.partial! 'weight_histroys/weight_histroy', weight_histroy: @weight_histroy
