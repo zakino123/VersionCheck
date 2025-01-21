@@ -6,8 +6,10 @@ ruby '3.4.1'
 gem 'bootsnap', '>= 1.4.4', require: false
 gem 'jbuilder', '~> 2.7'
 gem 'mysql2', '~> 0.5'
-gem 'puma', '~> 5.0'
-gem 'rails', '~> 6.1.3.1'
+gem 'puma', '>= 6.0'
+gem 'rails', '~> 7.2', '>= 7.2.2.1'
+
+gem 'sprockets-rails'
 
 gem 'simpacker'
 
@@ -70,9 +72,11 @@ end
 
 group :development, :test, :rubocop do
   gem 'rubocop', require: false
+  gem 'rubocop-capybara', require: false
   gem 'rubocop-factory_bot', require: false
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
+  gem 'rubocop-rspec_rails', require: false
 end
 
 group :development do

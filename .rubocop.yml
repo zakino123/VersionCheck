@@ -14,7 +14,7 @@ require:
 
 AllCops:
   # Rubyバージョン指定
-  TargetRubyVersion: 2.7
+  TargetRubyVersion: 3.4
   # 新しいCopもどんどん有効にする、不要ならこのファイルで設定を記述する
   NewCops: enable
   # 除外
