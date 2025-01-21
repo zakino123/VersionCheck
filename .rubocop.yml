@@ -1,0 +1,209 @@
+# 将来的には対応する規約の読込
+inherit_from: .rubocop_todo.yml
+
+inherit_gem:
+  test-prof: config/rubocop-rspec.yml
+
+# 追加した規約ファイル読込
+require:
+  - rubocop-rails
+  - rubocop-rspec
+  - rubocop-factory_bot
+  - rubocop-capybara
+  - rubocop-rspec_rails
+
+AllCops:
+  # Rubyバージョン指定
+  TargetRubyVersion: 2.7
+  # 新しいCopもどんどん有効にする、不要ならこのファイルで設定を記述する
+  NewCops: enable
+  # 除外
+  Exclude:
+    - 'config.ru'
+    - 'bin/**'
+    - 'lib/**'
+    - 'lib/**/*'
+    - 'db/**/*'
+    - 'config/**/*'
+    - 'script/**/*'
+    - 'vendor/**/*'
+    - '**/*.md'
+    - '**/*.{yml, yaml}'
+    - !ruby/regexp /old_and_unused\.rb$/
+
+# アノテーションコメントのルールをカスタマイズ
+Style/CommentAnnotation:
+  RequireColon: true
+  Keywords:
+    - TODO
+    - FIXME
+    - OPTIMIZE
+    - HACK
+    - REVIEW
+    - NOTE
+
+# 述語メソッド（?で終わるメソッド）で nil を返すことを許可
+Style/ReturnNilInPredicateMethodDefinition:
+  Exclude:
+    - 'app/loyalties/**/*'
+
+Style/SymbolProc:
+  ## bad
+  # something.do_something(foo, &:bar)
+  ## good
+  # something.do_something(foo) { |o| o.bar }
+  # see also: https://www.rubydoc.info/gems/rubocop/RuboCop/Cop/Style/SymbolProc
+  AllowMethodsWithArguments: true
+
+# 複数のインデックスを追加する際などに、change_tableの bulk: true オプションを使用する代わりに、複数の add_index メソッドなどを使用することを許可
+Rails/BulkChangeTable:
+  Enabled: false
+
+# dependent は外部キー制約で削除時の挙動を指定するため、無効にする
+Rails/HasManyOrHasOneDependent:
+  Enabled: false
+
+# putsでの標準出力を許可
+Rails/Output:
+  Exclude:
+    - 'db/migrate/*'
+
+# 日本語でのコメントを許可
+Style/AsciiComments:
+  Enabled: false
+
+# クラスのコメント必須を無視
+Style/Documentation:
+  Enabled: false
+
+# モジュール名::クラス名の定義を許可
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+# 文字リテラルのイミュータブル宣言を無視（freezeになるのはRuby3以降）
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+# 1行に収まりそうな条件文を強制的に後置ifにしたりしない
+# see also: https://www.rubydoc.info/gems/rubocop/RuboCop/Cop/Style/IfUnlessModifier
+Style/IfUnlessModifier:
+  Enabled: false
+
+# ラムダリテラルは ->(args) { ... } の形式を使う
+# see also: https://www.rubydoc.info/gems/rubocop/RuboCop/Cop/Style/Lambda
+Style/Lambda:
+  EnforcedStyle: literal
+
+# 論理否定の条件のIfをunlessなどに変換しない
+# see also: https://www.rubydoc.info/gems/rubocop/RuboCop/Cop/Style/NegatedIf
+Style/NegatedIf:
+  Enabled: false
+
+# Hash#has_key? の方が key? よりも意味が通る
+# see also: https://www.rubydoc.info/gems/rubocop/RuboCop/Cop/Style/PreferredHashMethods
+Style/PreferredHashMethods:
+  EnforcedStyle: verbose
+
+# 特に model 内において、ローカル変数とメソッド呼び出しの区別をつけた方が分かりやすい場合が多い
+# see also: https://www.rubydoc.info/gems/rubocop/RuboCop/Cop/Style/RedundantSelf
+Style/RedundantSelf:
+  Enabled: false
+
+# ネストしたif文を外側のif文の条件に組み合わせない
+# see also: https://www.rubydoc.info/gems/rubocop/RuboCop/Cop/Style/SoleNestedConditional
+Style/SoleNestedConditional:
+  Enabled: false
+
+# メソッド名のis/has prefixを許可する
+# see also: https://www.rubydoc.info/gems/rubocop/RuboCop/Cop/Naming/PredicateName
+Naming/PredicateName:
+  Enabled: false
+
+# controller でのアクションとなるメソッド名はエンドポイント名でもあるのでアクセサメソッドの命名規則を無視
+# see also: https://www.rubydoc.info/gems/rubocop/RuboCop/Cop/Naming/AccessorMethodName
+Naming/AccessorMethodName:
+  Exclude:
+    - 'app/controllers/**/*'
+    - 'app/loyalties/**/*'
+    - 'app/services/ukabu_ai/**/*'
+    - 'app/services/hubspot/hubspot_api_client.rb'
+    - 'app/services/mazrica/mazrica_api_client.rb'
+    - 'app/services/nbs/com_api_client.rb'
+    - 'app/services/salesforce/salesforce_api_client.rb'
+
+# 行の長さはちょっと長めの 185 まで許可
+# see also: https://www.rubydoc.info/gems/rubocop/RuboCop/Cop/Layout/LineLength
+Layout/LineLength:
+  Max: 500
+  Exclude:
+    - 'spec/**/*'
+
+# loyalties は banken 推奨の書き方に従うため、MissingSuper を無視
+Lint/MissingSuper:
+  Exclude:
+    - 'app/loyalties/**/*'
+
+# rubocop:disable コメントを入力できるようにする
+Lint/RedundantCopDisableDirective:
+  Enabled: false
+
+# 処理の明確化のために rescue して raise するだけのコードは許可する
+Lint/UselessRescue:
+  Enabled: false
+
+# Metrics 系のチェックをちょっと緩くする
+# see also: https://www.rubydoc.info/gems/rubocop/RuboCop/Cop/Metrics
+Metrics/AbcSize:
+  Max: 52
+
+Metrics/ClassLength:
+  Max: 400
+  CountAsOne: ['array', 'hash', 'heredoc', 'method_call']
+
+Metrics/MethodLength:
+  Max: 60
+  CountAsOne: ['array', 'hash', 'heredoc', 'method_call']
+
+Metrics/ModuleLength:
+  CountAsOne: ['array', 'hash', 'heredoc', 'method_call']
+
+Metrics/BlockLength:
+  Exclude:
+    - 'app/views/**/*'
+    - 'config/routes.rb'
+
+Metrics/CyclomaticComplexity:
+  Max: 35
+
+Metrics/PerceivedComplexity:
+  Max: 40
+
+# RSpec
+
+RSpec/NestedGroups:
+  Max: 5
+
+RSpec/ContextWording:
+  AllowedPatterns:
+    - とき$
+    - 場合$
+    - なら$
+    - 系$
+
+# described_class は使わない
+RSpec/DescribedClass:
+  EnforcedStyle: explicit
+
+RSpec/ExampleLength:
+  Enabled: true
+  Max: 20
+  CountAsOne: ['array', 'hash', 'heredoc', 'method_call']
+
+RSpec/NamedSubject:
+  Enabled: false
+
+# FactoryBot
+
+# 暗黙的なassociationを禁止
+FactoryBot/AssociationStyle:
+  EnforcedStyle: explicit
